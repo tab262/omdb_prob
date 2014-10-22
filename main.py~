@@ -1,0 +1,34 @@
+from Movie import Movie
+import sys
+
+def main(argv):
+    print "MAIN PROGRAM"
+    print argv
+    movie_list = open("movies2.csv").read().split("\n")
+
+    ml = []
+
+    for movie in movie_list:
+        #print movie
+        split = movie.replace('"','').split(",")
+        year = split[-1]
+        title = ""
+        #print split
+        for word in split[0:-1]:
+            title += word
+        #print word + ": " + year
+        m = Movie(title,year)
+        ml.append(m)
+        print m
+
+        
+
+
+    print '-' * 30
+    ml_sorted = sorted(ml, key=lambda movie: movie.rating, reverse=True)
+
+    for m in ml_sorted:
+        print m
+
+
+if __name__=="__main__":main(sys.argv)

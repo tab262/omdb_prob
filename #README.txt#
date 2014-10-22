@@ -1,0 +1,46 @@
+
+
+
+
+Contents:
+	A. Running the program
+	B. Design Considerations
+	C. Issues and Known Bugs
+	D. General comments
+
+
+
+A. Running the program
+
+The program is written entirely in Python. 
+
+
+B. Design Considerations
+
+There are two classes 1)main.py and 2)Movie.py . The main module is the main driver of the program, opening the CSV file and reading line by line, creating Movie objects for each line. The Movie.py module defines the Movie class and is responsible for parsing each line to make the ultimate call to the OMDB API. 
+Given the time frame of two hours for completion and the instructions relating to API calls, I decide to go with a simple serial implementation of the program. The main bottleneck in performance, given the current input size, is the API calls. Performance increases could be gained by through parallelization of API and having multiple data structures. If the input size were to increase, two observations can be made. If we were strictly concerned with the score, 
+
+The program currently stores the entire response in the object and I chose to do this to extend the potential uses for the program. As written, the program can sort based on a given optional key such as the "Metascore" or "imdbID".
+
+Efforts were made to decouple the input processing from the API call. The processing of each line was one of the biggest problem areas given the variety of inputs. By decoupling the input processing, we can focus on dealing with special cases in this function alone.
+
+
+C. Issues and Known Bugs
+
+The two biggest challenges in this problem were dealing with special cases in the input and formatting a valid URL for the API call. From an initial inspection of the input I found the following cases:
+
+1. Spaces and other characters like quotation marks are in movie titles, which can result in malformed URLs
+2. Some movies will not be found either because 1) It does not exist or 2) Movie title does not match provided year
+3. Some titles have commas in them. Care needs to be taken in parsing the title and year
+4. Foreign characters can result in printing and encoding errors
+
+Within the given time frame I attempted to handle most of these cases, albeit there is much room for improvement. In particular, for case 2, I simply output the title of the movie to a log file for later inspection. This will help maintenance of the program as unknown cases may arise and the user of the program can always check for errors. For case 4, I simply ignore this issue for now and remove the offending character. This is not ideal, but allows for the program to run with no problems.
+
+The biggest issue the currently exists is that there is nothing to handle issues with the API having errors in terms of a broken connection. If the connection were to be lost, the program would simply crash.
+
+
+
+
+D. General Comments
+
+I enjoyed this challenge, in particular with the time constraint. It forced me to prioritize features and other aspects of the program so I could get a working prototype, while programming in such a manner that would allow me to go back later to handle special cases.

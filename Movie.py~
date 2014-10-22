@@ -1,0 +1,46 @@
+import sys
+import json
+import urllib2
+import requests
+
+class Movie:
+    def __init__(self, title, year):
+        # error checking title
+        self.title = title
+        self.year = year
+        api_url = "http://www.omdbapi.com/?t="+(self.title.replace(" ","%20"))+"&y="+self.year
+        #print api_url
+        movie_json = json.load(urllib2.urlopen(api_url))
+
+        if movie_json['Response'] == 'False':
+            print self.title + " not found"
+            self.rating = "-1 Rating Not Found"
+        else:
+            self.rating = movie_json['imdbRating']
+
+    #def API_call
+
+    def __str__(self):
+        return (self.title + " -- " + self.rating)
+
+
+def main():
+    lofm = [Movie("True Grit","1969"),
+            Movie("Mission Impossible", "2000"),
+            Movie("The Yearling", "1946"),
+            Movie("Yesterday, Today and Tomorrow ", "1964"),
+        ]
+
+
+
+    for x in lofm:
+        print x
+
+    print "Sorting..."
+    lofm2 = sorted(lofm, key=lambda movie: movie.rating, reverse=True)
+
+    for x in lofm2:
+        print x
+
+
+if __name__=="__main__":main(sys.argv)

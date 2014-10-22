@@ -1,0 +1,43 @@
+Use bucket sort - you know the range of scores is between 0 and 10. 
+
+Can do 
+
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+.
+.
+.
+.
+9.8
+9.9
+10.0
+
+
+Use threads - do the API calls in the background.
+Data structure 
+Two Queues
+  1. Items to be pulled
+  2. Items to be pulled and waiting to be inserted
+
+Testing - can test scores to be geq to 0 and leq to 10
+
+
+Easy - single thread. For each item, call API, append. Then sort and print.
+
+Medium - multiple thEreads pulling from API and appending. Then sort on defined key. Then print. Add option to do bucket sort
+
+Hard - Multithreaded pull, as well as multithread bucket sort. Locks for each array item.
+
+
+
+
+ISSUES:
+Characters like spaces are in movie titles -> need to replace with %20
+Some movies will not be found...how to handle. Found case where movie title does not match year
+Some titles have commas in them
+Foreign language - for printing
+Ratings that are "N/A"
