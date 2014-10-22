@@ -1,3 +1,5 @@
+# Author: Casey O'Rourke
+
 import sys
 import json
 import urllib2
